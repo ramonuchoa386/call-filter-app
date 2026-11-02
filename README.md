@@ -1,6 +1,15 @@
 # Call Filter - Rejeitador de Chamadas (Android)
 
-Aplicativo Android nativo construído com **Kotlin**, **TDD (Test-Driven Development)** e **Arquitetura Hexagonal**. O objetivo principal é interceptar chamadas recebidas e rejeitar automaticamente números que não estejam gravados na agenda de contatos ou que estejam em uma lista de exceção.
+O **Call Filter** é um aplicativo Android nativo desenvolvido em **Kotlin**, utilizando **Arquitetura Hexagonal (Ports & Adapters)** e **TDD (Test-Driven Development)**. O objetivo principal do aplicativo é interceptar chamadas recebidas antes de o aparelho tocar e rejeitar automaticamente números desconhecidos (que não constam na agenda de contatos) ou números específicos presentes na lista de bloqueio/exceção.
+
+---
+
+## 🚀 Funcionalidades Atuais
+
+- **Rejeição Automática de Não-Contatos:** Alternador para ativar/desativar o bloqueio global de qualquer chamada recebida cujo número não esteja salvo na agenda nativa do dispositivo.
+- **Bloqueio/Desbloqueio de Contato Específico:** Permite adicionar ou remover um número de telefone específico a uma lista de exceção mantida no aplicativo.
+- **Integração com Android CallScreeningService (API 29+ / Android 10+):** Utiliza as APIs modernas do Android para avaliação nativa e imediata de chamadas de entrada.
+- **Solicitação Dinâmica de Permissões e Roles:** Interface integrada para concessão de permissão de leitura de contatos (`READ_CONTACTS`) e solicitação da atribuição da *Role* do sistema `ROLE_CALL_SCREENING`.
 
 ---
 
@@ -143,3 +152,23 @@ adb shell gsm call +5521999999999
 
 
 4. O app chamará o `CallScreeningServiceImpl` e a ligação será rejeitada automaticamente.
+
+---
+
+## 📌 Backlog Inicial do Projeto
+
+Abaixo estão as próximas entregas e evoluções planejadas para o produto:
+
+* [ ] **View de Lista de Contatos Bloqueados:** Interface visual dedicada para exibição dos números bloqueados, contendo filtro de ordenação e campo de busca por nome/número.
+* [ ] **View de Histórico de Chamadas Interceptadas:** Tela com log de chamadas recebidas, informando data/hora e permitindo filtragem entre chamadas *Aceitas* e *Bloqueadas*.
+* [ ] **Evolução de UX/UI:** Implementação de navegação por Tabs/Bottom Navigation, biblioteca de componentes visuais modernizada e refinamentos estéticos.
+* [ ] **Débitos Técnicos e Infraestrutura:** Migração do armazenamento local para Room Database, implementação de testes e2e (Espresso) e expansão da cobertura unitária.
+* [ ] **Central de Preferências de Notificações:** Opções para personalizar alertas/notificações quando uma chamada for bloqueada em segundo plano.
+* [ ] **Espaço para Anúncios:** Integração com rede de anúncios (AdMob) para monetização da versão gratuita.
+* [ ] **Integração Firebase:** Conexão com Firebase Remote Config para resgatar configurações e feature flags do aplicativo dinamicamente.
+
+---
+
+## 📄 Licença
+
+Este projeto é disponibilizado sob a licença [MIT](https://www.google.com/search?q=LICENSE).
