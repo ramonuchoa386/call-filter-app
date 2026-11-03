@@ -14,13 +14,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.callfilter.R
-import com.example.callfilter.adapter.output.SharedPreferencesSettingsRepository
 import com.example.callfilter.domain.port.input.ToggleBlockUnknownUseCase
 import com.example.callfilter.domain.port.input.ToggleContactExclusionUseCase
+import com.example.callfilter.domain.port.output.CallSettingsRepository
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var repository: SharedPreferencesSettingsRepository
+    @Inject
+    lateinit var repository: CallSettingsRepository
+
     private lateinit var toggleBlockUnknownUseCase: ToggleBlockUnknownUseCase
     private lateinit var toggleContactExclusionUseCase: ToggleContactExclusionUseCase
 
@@ -28,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        repository = SharedPreferencesSettingsRepository(applicationContext)
         toggleBlockUnknownUseCase = ToggleBlockUnknownUseCase(repository)
         toggleContactExclusionUseCase = ToggleContactExclusionUseCase(repository)
 
