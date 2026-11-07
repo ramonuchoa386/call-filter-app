@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -55,9 +54,7 @@ fun MainScreen() {
             modifier = Modifier.padding(paddingValues)
         ) {
             composable("settings") { SettingsScreen() }
-            composable("history") { Text("Histórico (Em Breve)", modifier = Modifier.padding(16.dp)) }
-            
-            // Nova tela plugada na rota correspondente!
+            composable("history") { HistoryScreen() }
             composable("blocked") { BlockedContactsScreen() }
         }
     }
