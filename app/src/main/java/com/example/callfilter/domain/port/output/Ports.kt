@@ -10,3 +10,7 @@ interface CallSettingsRepository {
 interface ContactLookupPort {
     fun isContact(phoneNumber: String): Boolean
 }
+
+interface CallLogRepository {
+    suspend fun logCall(phoneNumber: String, status: String)
+}

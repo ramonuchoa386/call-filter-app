@@ -3,8 +3,11 @@ package com.example.callfilter.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.callfilter.adapter.output.AndroidContactLookupAdapter
+import com.example.callfilter.adapter.output.RoomCallLogRepositoryImpl
 import com.example.callfilter.adapter.output.RoomSettingsRepositoryImpl
 import com.example.callfilter.adapter.output.db.dao.BlockedContactDao
+import com.example.callfilter.adapter.output.db.dao.CallLogDao
+import com.example.callfilter.domain.port.output.CallLogRepository
 import com.example.callfilter.domain.port.output.CallSettingsRepository
 import com.example.callfilter.domain.port.output.ContactLookupPort
 import dagger.Module
@@ -33,5 +36,13 @@ object RepositoryModule {
         @ApplicationContext context: Context
     ): ContactLookupPort {
         return AndroidContactLookupAdapter(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCallLogRepository(
+        callLogDao: CallLogDao
+    ): CallLogRepository {
+        return RoomCallLogRepositoryImpl(callLogDao)
     }
 }
