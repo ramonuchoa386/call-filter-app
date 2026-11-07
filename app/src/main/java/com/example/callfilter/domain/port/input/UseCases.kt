@@ -2,8 +2,9 @@ package com.example.callfilter.domain.port.input
 
 import com.example.callfilter.domain.port.output.CallSettingsRepository
 import com.example.callfilter.domain.port.output.ContactLookupPort
+import javax.inject.Inject
 
-class EvaluateCallUseCase(
+class EvaluateCallUseCase @Inject constructor(
     private val repository: CallSettingsRepository,
     private val contactLookup: ContactLookupPort
 ) {
@@ -14,14 +15,14 @@ class EvaluateCallUseCase(
     }
 }
 
-class ToggleBlockUnknownUseCase(private val repository: CallSettingsRepository) {
+class ToggleBlockUnknownUseCase @Inject constructor(private val repository: CallSettingsRepository) {
     fun execute(enabled: Boolean) {
         val current = repository.getSettings()
         repository.saveSettings(current.copy(blockUnknown = enabled))
     }
 }
 
-class ToggleContactExclusionUseCase(private val repository: CallSettingsRepository) {
+class ToggleContactExclusionUseCase @Inject constructor(private val repository: CallSettingsRepository) {
     fun execute(phoneNumber: String, block: Boolean) {
         val current = repository.getSettings()
         val updated = current.excludedContacts.toMutableSet()
