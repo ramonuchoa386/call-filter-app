@@ -6,67 +6,24 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Switch
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.callfilter.R
-import com.example.callfilter.domain.port.input.ToggleBlockUnknownUseCase
-import com.example.callfilter.domain.port.input.ToggleContactExclusionUseCase
-import com.example.callfilter.domain.port.output.CallSettingsRepository
+import com.example.callfilter.adapter.input.ui.theme.CallFilterTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var repository: CallSettingsRepository
-
-    private lateinit var toggleBlockUnknownUseCase: ToggleBlockUnknownUseCase
-    private lateinit var toggleContactExclusionUseCase: ToggleContactExclusionUseCase
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        toggleBlockUnknownUseCase = ToggleBlockUnknownUseCase(repository)
-        toggleContactExclusionUseCase = ToggleContactExclusionUseCase(repository)
-
+        
         setupPermissions()
-        setupUI()
-    }
-
-    private fun setupUI() {
-        val switchBlockUnknown = findViewById<Switch>(R.id.switchBlockUnknown)
-        val edtPhoneNumber = findViewById<EditText>(R.id.edtPhoneNumber)
-        val btnBlockNumber = findViewById<Button>(R.id.btnBlockNumber)
-        val btnUnblockNumber = findViewById<Button>(R.id.btnUnblockNumber)
-
-        switchBlockUnknown.isChecked = repository.getSettings().blockUnknown
-
-        switchBlockUnknown.setOnCheckedChangeListener { _, isChecked ->
-            toggleBlockUnknownUseCase.execute(isChecked)
-        }
-
-        btnBlockNumber.setOnClickListener {
-            val phone = edtPhoneNumber.text.toString().trim()
-            if (phone.isNotEmpty()) {
-                toggleContactExclusionUseCase.execute(phone, block = true)
-                Toast.makeText(this, "Número bloqueado", Toast.LENGTH_SHORT).show()
-                edtPhoneNumber.text.clear()
-            }
-        }
-
-        btnUnblockNumber.setOnClickListener {
-            val phone = edtPhoneNumber.text.toString().trim()
-            if (phone.isNotEmpty()) {
-                toggleContactExclusionUseCase.execute(phone, block = false)
-                Toast.makeText(this, "Número desbloqueado", Toast.LENGTH_SHORT).show()
-                edtPhoneNumber.text.clear()
+        
+        setContent {
+            CallFilterTheme {
+                MainScreen()
             }
         }
     }

@@ -3,8 +3,13 @@ package com.example.callfilter.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.callfilter.adapter.output.AndroidContactLookupAdapter
+import com.example.callfilter.adapter.output.RoomBlockedContactRepositoryImpl
+import com.example.callfilter.adapter.output.RoomCallLogRepositoryImpl
 import com.example.callfilter.adapter.output.RoomSettingsRepositoryImpl
 import com.example.callfilter.adapter.output.db.dao.BlockedContactDao
+import com.example.callfilter.adapter.output.db.dao.CallLogDao
+import com.example.callfilter.domain.port.output.BlockedContactRepository
+import com.example.callfilter.domain.port.output.CallLogRepository
 import com.example.callfilter.domain.port.output.CallSettingsRepository
 import com.example.callfilter.domain.port.output.ContactLookupPort
 import dagger.Module
@@ -17,21 +22,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
+    @Provides
+    @Singleton
+    fun provideCallSettingsRepository(prefs: SharedPreferences, blockedContactDao: BlockedContactDao): CallSettingsRepository = RoomSettingsRepositoryImpl(prefs, blockedContactDao)
 
     @Provides
     @Singleton
-    fun provideCallSettingsRepository(
-        prefs: SharedPreferences,
-        blockedContactDao: BlockedContactDao
-    ): CallSettingsRepository {
-        return RoomSettingsRepositoryImpl(prefs, blockedContactDao)
-    }
+    fun provideContactLookupPort(@ApplicationContext context: Context): ContactLookupPort = AndroidContactLookupAdapter(context)
 
     @Provides
     @Singleton
-    fun provideContactLookupPort(
-        @ApplicationContext context: Context
-    ): ContactLookupPort {
-        return AndroidContactLookupAdapter(context)
-    }
+    fun provideCallLogRepository(callLogDao: CallLogDao): CallLogRepository = RoomCallLogRepositoryImpl(callLogDao)
+
+    @Provides
+    @Singleton
+    fun provideBlockedContactRepository(dao: BlockedContactDao): BlockedContactRepository = RoomBlockedContactRepositoryImpl(dao)
 }
