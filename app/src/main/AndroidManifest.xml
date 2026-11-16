@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".CallFilterApplication"
@@ -11,6 +13,11 @@
         android:label="Call Filter"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+
+        <!-- AdMob App ID de Testes da Google -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
 
         <activity
             android:name=".adapter.input.ui.MainActivity"
@@ -26,6 +33,7 @@
             android:permission="android.permission.BIND_SCREENING_SERVICE"
             android:exported="true">
             <intent-filter>
+                <action android:name="com.google.android.play.core.assetpacks.AssetPackService" />
                 <action android:name="android.telecom.CallScreeningService" />
             </intent-filter>
         </service>

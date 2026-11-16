@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1066435873209",
+    "project_id": "call-filter-29c4a",
+    "storage_bucket": "call-filter-29c4a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066435873209:android:356eae83bc26857a500e68",
+        "android_client_info": {
+          "package_name": "com.example.callfilter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjRE0IgJfGADsIIEZp6bq0cwJSGwbQb9o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
