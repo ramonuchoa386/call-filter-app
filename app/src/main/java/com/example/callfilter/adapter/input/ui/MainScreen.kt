@@ -11,20 +11,30 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.callfilter.adapter.input.ui.component.AdBannerView
+import com.example.callfilter.adapter.input.ui.viewmodel.MonetizationViewModel
 
 @Composable
-fun MainScreen() {
+fun MainScreen(monetizationViewModel: MonetizationViewModel = hiltViewModel()) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+    val isPremium by monetizationViewModel.isPremium.collectAsState()
 
     Scaffold(
+        topBar = {
+            if (!isPremium) {
+                AdBannerView()
+            }
+        },
         bottomBar = {
             NavigationBar {
                 NavigationBarItem(
