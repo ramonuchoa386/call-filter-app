@@ -28,10 +28,13 @@ fun MainScreen(monetizationViewModel: MonetizationViewModel = hiltViewModel()) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val isPremium by monetizationViewModel.isPremium.collectAsState()
+    val isAdEnabled by monetizationViewModel.isAdEnabled.collectAsState()
+
+    val showAds = !isPremium && isAdEnabled
 
     Scaffold(
         topBar = {
-            if (!isPremium) {
+            if (showAds) {
                 AdBannerView()
             }
         },

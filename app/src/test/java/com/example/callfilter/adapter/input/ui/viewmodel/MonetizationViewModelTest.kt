@@ -1,5 +1,6 @@
 package com.example.callfilter.adapter.input.ui.viewmodel
 
+import com.example.callfilter.adapter.output.FirebaseRemoteConfigAdapter
 import com.example.callfilter.domain.port.input.CheckPremiumStatusUseCase
 import com.example.callfilter.domain.port.input.SetPremiumStatusUseCase
 import com.example.callfilter.domain.port.output.PremiumRepository
@@ -18,6 +19,19 @@ class FakePremiumRepo : PremiumRepository {
     override fun setPremium(isPremium: Boolean) { premium = isPremium }
 }
 
+class FakeFirebaseRemoteConfigAdapter : FirebaseRemoteConfigAdapter() {
+    var adEnabledValue: Boolean = true
+    var fetchSuccessValue: Boolean = true
+
+    override fun fetchAndActivate(onComplete: (Boolean) -> Unit) {
+        onComplete(fetchSuccessValue)
+    }
+
+    override fun isAdMobEnabled(): Boolean {
+        return adEnabledValue
+    }
+}
+
 @OptIn(ExperimentalCoroutinesApi::class)
 class MonetizationViewModelTest {
 
@@ -26,12 +40,14 @@ class MonetizationViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule(testDispatcher)
 
+    private val remoteConfigAdapter = FakeFirebaseRemoteConfigAdapter()
+
     @Test
     fun `deve iniciar com status nao premium`() = runTest(testDispatcher) {
         val repo = FakePremiumRepo()
         val checkUseCase = CheckPremiumStatusUseCase(repo)
         val setUseCase = SetPremiumStatusUseCase(repo)
-        val viewModel = MonetizationViewModel(checkUseCase, setUseCase)
+        val viewModel = MonetizationViewModel(checkUseCase, setUseCase, remoteConfigAdapter)
 
         assertFalse(viewModel.isPremium.value)
     }
@@ -41,7 +57,7 @@ class MonetizationViewModelTest {
         val repo = FakePremiumRepo()
         val checkUseCase = CheckPremiumStatusUseCase(repo)
         val setUseCase = SetPremiumStatusUseCase(repo)
-        val viewModel = MonetizationViewModel(checkUseCase, setUseCase)
+        val viewModel = MonetizationViewModel(checkUseCase, setUseCase, remoteConfigAdapter)
 
         viewModel.setPremium(true)
 
