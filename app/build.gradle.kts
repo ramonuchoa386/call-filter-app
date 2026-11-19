@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -58,6 +59,17 @@ dependencies {
     // Dependency Injection - Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+
+    // ==========================================
+    // Monetização e Operações (Épico 3)
+    // ==========================================
+    implementation("com.google.android.gms:play-services-ads:23.0.0")
+    implementation("com.android.billingclient:billing-ktx:6.2.0")
+    
+    // Firebase BoM & Remote Config
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-config-ktx")
 
     // Testes Unitarios
     testImplementation(libs.junit)

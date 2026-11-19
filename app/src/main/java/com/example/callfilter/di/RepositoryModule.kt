@@ -6,12 +6,14 @@ import com.example.callfilter.adapter.output.AndroidContactLookupAdapter
 import com.example.callfilter.adapter.output.RoomBlockedContactRepositoryImpl
 import com.example.callfilter.adapter.output.RoomCallLogRepositoryImpl
 import com.example.callfilter.adapter.output.RoomSettingsRepositoryImpl
+import com.example.callfilter.adapter.output.SharedPreferencesPremiumRepositoryImpl
 import com.example.callfilter.adapter.output.db.dao.BlockedContactDao
 import com.example.callfilter.adapter.output.db.dao.CallLogDao
 import com.example.callfilter.domain.port.output.BlockedContactRepository
 import com.example.callfilter.domain.port.output.CallLogRepository
 import com.example.callfilter.domain.port.output.CallSettingsRepository
 import com.example.callfilter.domain.port.output.ContactLookupPort
+import com.example.callfilter.domain.port.output.PremiumRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,4 +39,12 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideBlockedContactRepository(dao: BlockedContactDao): BlockedContactRepository = RoomBlockedContactRepositoryImpl(dao)
+    
+    @Provides
+    @Singleton
+    fun providePremiumRepository(
+        prefs: SharedPreferences
+    ): PremiumRepository {
+        return SharedPreferencesPremiumRepositoryImpl(prefs)
+    }
 }
