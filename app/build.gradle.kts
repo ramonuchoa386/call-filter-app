@@ -11,7 +11,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.callfilter"
+        applicationId = "com.ramon.callfilter"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
