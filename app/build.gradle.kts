@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.google.services)
@@ -8,12 +9,12 @@ plugins {
 
 android {
     namespace = "com.example.callfilter"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.callfilter"
+        applicationId = "com.ramon.callfilter"
         minSdk = 29
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -24,14 +25,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 }
 
@@ -64,7 +65,7 @@ dependencies {
     // Monetização e Operações (Épico 3)
     // ==========================================
     implementation("com.google.android.gms:play-services-ads:23.0.0")
-    implementation("com.android.billingclient:billing-ktx:6.2.0")
+    implementation(libs.play.billing)
     
     // Firebase BoM & Remote Config
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
@@ -73,7 +74,7 @@ dependencies {
 
     // Testes Unitarios
     testImplementation(libs.junit)
-    testImplementation("org.robolectric:robolectric:4.11.1")
+    testImplementation("org.robolectric:robolectric:4.16.1")
     testImplementation("androidx.test:core-ktx:1.5.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 }
