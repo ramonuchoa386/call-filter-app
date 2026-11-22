@@ -4,7 +4,10 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - "main"
+      - "build/application-id-definitivo"
+      - "build/target-sdk-36"
 
 jobs:
   test-and-build:
