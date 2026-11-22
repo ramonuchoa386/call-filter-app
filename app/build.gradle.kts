@@ -65,7 +65,7 @@ dependencies {
     // Monetização e Operações (Épico 3)
     // ==========================================
     implementation("com.google.android.gms:play-services-ads:23.0.0")
-    implementation("com.android.billingclient:billing-ktx:6.2.0")
+    implementation(libs.play.billing)
     
     // Firebase BoM & Remote Config
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
