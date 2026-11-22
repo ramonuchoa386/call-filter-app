@@ -37,8 +37,8 @@ com.example.callfilter/
 
 Certifique-se de que o seu ambiente possui os binários e variáveis configurados:
 
-* **JDK 17** (`java -version`)
-* **Android SDK** com `platform-tools` (`adb --version`) e `cmdline-tools`
+* **JDK 21** (`java -version`); o AGP requer JDK 17+, e o Robolectric para API 36 requer JDK 21.
+* **Android SDK**, incluindo a plataforma Android 36 (`sdkmanager "platforms;android-36"`), `platform-tools` (`adb --version`) e `cmdline-tools`
 * **Gradle Wrapper** (`./gradlew`)
 
 ---
@@ -111,11 +111,11 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 1. **Baixar Imagem do Sistema e Criar AVD:**
 ```bash
-# Baixar a imagem do sistema Android 34
-sdkmanager "system-images;android-34;google_apis;x86_64"
+# Baixar a imagem do sistema Android 36
+sdkmanager "system-images;android-36;google_apis;x86_64"
 
 # Criar o dispositivo virtual
-avdmanager create avd -n TestDevice -k "system-images;android-34;google_apis;x86_64"
+avdmanager create avd -n TestDevice -k "system-images;android-36;google_apis;x86_64"
 
 ```
 
@@ -146,7 +146,7 @@ Você pode simular chamadas recebidas para testar a rejeição em tempo real:
 2. Ative a chave **"Rejeitar chamadas de não contatos"**.
 3. No terminal, envie uma chamada simulada de um número não gravado no emulador via `adb`:
 ```bash
-adb shell gsm call +5521999999999
+adb emu gsm call +5521999999999
 
 ```
 
